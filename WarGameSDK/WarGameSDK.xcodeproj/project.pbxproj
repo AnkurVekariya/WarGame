@@ -14,6 +14,7 @@
 		EB6426902C833B4F00454AA5 /* WarGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB64268F2C833B4F00454AA5 /* WarGame.swift */; };
 		EB6426912C833B4F00454AA5 /* WarGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB64268F2C833B4F00454AA5 /* WarGame.swift */; };
 		EB6426942C833C1300454AA5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426932C833C1300454AA5 /* Constants.swift */; };
+		EBFBF2102C8353F80063B44A /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF20F2C8353F80063B44A /* Deck.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		EB6426842C833ADE00454AA5 /* WarGameSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGameSDKTests.swift; sourceTree = "<group>"; };
 		EB64268F2C833B4F00454AA5 /* WarGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGame.swift; sourceTree = "<group>"; };
 		EB6426932C833C1300454AA5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EBFBF20F2C8353F80063B44A /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 			children = (
 				EB6426782C833ADE00454AA5 /* WarGameSDK.h */,
 				EB64268F2C833B4F00454AA5 /* WarGame.swift */,
+				EBFBF20E2C8353E40063B44A /* Models */,
 				EB6426922C833BE000454AA5 /* SupportingFiles */,
 				EB6426792C833ADE00454AA5 /* WarGameSDK.docc */,
 			);
@@ -98,6 +101,14 @@
 				EB6426932C833C1300454AA5 /* Constants.swift */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		EBFBF20E2C8353E40063B44A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EBFBF20F2C8353F80063B44A /* Deck.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBFBF2102C8353F80063B44A /* Deck.swift in Sources */,
 				EB6426902C833B4F00454AA5 /* WarGame.swift in Sources */,
 				EB64267A2C833ADE00454AA5 /* WarGameSDK.docc in Sources */,
 				EB6426942C833C1300454AA5 /* Constants.swift in Sources */,
