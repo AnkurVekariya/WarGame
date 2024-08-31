@@ -16,8 +16,11 @@ public class WarGame: ObservableObject {
     @Published public var alertMessage = ""
     @Published public var showAlert = false
     @Published public var currentRoundWinner: String = ""
+    @Published public var isGameStarted = false
     
     public var deck: Deck?
+    
+    private var numberOfPlayers: Int = 2
     
     public init() {}
     
@@ -33,6 +36,11 @@ public class WarGame: ObservableObject {
             do {
                 self.deck = try JSONDecoder().decode(Deck.self, from: data)
                 self.deckId = self.deck?.deck_id ?? ""
+                
+                DispatchQueue.main.async {
+                    self.dealCards(to: numberOfPlayers)
+                }
+                
             } catch {
                 print("Failed to decode deck: \(error)")
             }
@@ -64,6 +72,12 @@ public class WarGame: ObservableObject {
             }
         }
     }
+
+    public func startNewGame(withNumberOfPlayers numberOfPlayers: Int) {
+        self.numberOfPlayers = numberOfPlayers
+        startGame(withNumberOfPlayers: numberOfPlayers)
+    }
+    
 }
 
 extension WarGame {
@@ -90,6 +104,7 @@ extension WarGame {
                     self.players = cardChunks.prefix(numberOfPlayers).enumerated().map { index, cards in
                         Player(name: "Player \(index + 1)", pile: cards)
                     }
+                    self.isGameStarted = true
                 }
             } catch {
                 print("Failed to decode cards: \(error)")
