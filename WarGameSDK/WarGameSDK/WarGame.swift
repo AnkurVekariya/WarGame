@@ -10,6 +10,7 @@ import Combine
 
 public class WarGame: ObservableObject {
     
+    @Published public var players: [Player] = []
     @Published public var deckId: String = ""
     
     public var deck: Deck?
@@ -30,6 +31,39 @@ public class WarGame: ObservableObject {
                 self.deckId = self.deck?.deck_id ?? ""
             } catch {
                 print("Failed to decode deck: \(error)")
+            }
+        }
+        task.resume()
+    }
+}
+
+extension WarGame {
+    
+    private func dealCards(to numberOfPlayers: Int) {
+        
+        guard let deckId = deck?.deck_id else { return }
+
+        let url = URL(string: "\(Utility.baseUrl)/\(deckId)/draw/?count=\(numberOfPlayers * 52)")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else { return }
+            do {
+                let cardsResponse = try JSONDecoder().decode(DrawCardsModel.self, from: data)
+                guard let cards = cardsResponse.cards else {
+                    return
+                }
+                let dealtCards = Array(cards.prefix(numberOfPlayers * 52))
+                let cardChunks = dealtCards.chunked(into: dealtCards.count / numberOfPlayers)
+
+                DispatchQueue.main.async {
+                    self.players = cardChunks.prefix(numberOfPlayers).enumerated().map { index, cards in
+                        Player(name: "Player \(index + 1)", pile: cards)
+                    }
+                }
+            } catch {
+                print("Failed to decode cards: \(error)")
             }
         }
         task.resume()

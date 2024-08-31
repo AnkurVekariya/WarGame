@@ -15,6 +15,10 @@
 		EB6426912C833B4F00454AA5 /* WarGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB64268F2C833B4F00454AA5 /* WarGame.swift */; };
 		EB6426942C833C1300454AA5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426932C833C1300454AA5 /* Constants.swift */; };
 		EBFBF2102C8353F80063B44A /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF20F2C8353F80063B44A /* Deck.swift */; };
+		EBFBF2122C8354C20063B44A /* DrawCardsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2112C8354C20063B44A /* DrawCardsModel.swift */; };
+		EBFBF2142C8354EF0063B44A /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2132C8354EF0063B44A /* Card.swift */; };
+		EBFBF2162C8355070063B44A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2152C8355070063B44A /* Player.swift */; };
+		EBFBF2182C8355300063B44A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2172C8355300063B44A /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +40,10 @@
 		EB64268F2C833B4F00454AA5 /* WarGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGame.swift; sourceTree = "<group>"; };
 		EB6426932C833C1300454AA5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EBFBF20F2C8353F80063B44A /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		EBFBF2112C8354C20063B44A /* DrawCardsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawCardsModel.swift; sourceTree = "<group>"; };
+		EBFBF2132C8354EF0063B44A /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		EBFBF2152C8355070063B44A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		EBFBF2172C8355300063B44A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				EB6426932C833C1300454AA5 /* Constants.swift */,
+				EBFBF2172C8355300063B44A /* Extensions.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -107,6 +116,9 @@
 			isa = PBXGroup;
 			children = (
 				EBFBF20F2C8353F80063B44A /* Deck.swift */,
+				EBFBF2112C8354C20063B44A /* DrawCardsModel.swift */,
+				EBFBF2132C8354EF0063B44A /* Card.swift */,
+				EBFBF2152C8355070063B44A /* Player.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -220,8 +232,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBFBF2122C8354C20063B44A /* DrawCardsModel.swift in Sources */,
+				EBFBF2142C8354EF0063B44A /* Card.swift in Sources */,
 				EBFBF2102C8353F80063B44A /* Deck.swift in Sources */,
+				EBFBF2182C8355300063B44A /* Extensions.swift in Sources */,
 				EB6426902C833B4F00454AA5 /* WarGame.swift in Sources */,
+				EBFBF2162C8355070063B44A /* Player.swift in Sources */,
 				EB64267A2C833ADE00454AA5 /* WarGameSDK.docc in Sources */,
 				EB6426942C833C1300454AA5 /* Constants.swift in Sources */,
 			);
