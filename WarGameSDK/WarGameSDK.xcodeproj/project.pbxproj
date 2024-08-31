@@ -11,6 +11,8 @@
 		EB6426802C833ADE00454AA5 /* WarGameSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB6426752C833ADE00454AA5 /* WarGameSDK.framework */; };
 		EB6426852C833ADE00454AA5 /* WarGameSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426842C833ADE00454AA5 /* WarGameSDKTests.swift */; };
 		EB6426862C833ADE00454AA5 /* WarGameSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EB6426782C833ADE00454AA5 /* WarGameSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EB6426902C833B4F00454AA5 /* WarGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB64268F2C833B4F00454AA5 /* WarGame.swift */; };
+		EB6426912C833B4F00454AA5 /* WarGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB64268F2C833B4F00454AA5 /* WarGame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,7 @@
 		EB6426792C833ADE00454AA5 /* WarGameSDK.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = WarGameSDK.docc; sourceTree = "<group>"; };
 		EB64267F2C833ADE00454AA5 /* WarGameSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarGameSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB6426842C833ADE00454AA5 /* WarGameSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGameSDKTests.swift; sourceTree = "<group>"; };
+		EB64268F2C833B4F00454AA5 /* WarGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				EB6426782C833ADE00454AA5 /* WarGameSDK.h */,
+				EB64268F2C833B4F00454AA5 /* WarGame.swift */,
 				EB6426792C833ADE00454AA5 /* WarGameSDK.docc */,
 			);
 			path = WarGameSDK;
@@ -194,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB6426902C833B4F00454AA5 /* WarGame.swift in Sources */,
 				EB64267A2C833ADE00454AA5 /* WarGameSDK.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,6 +207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB6426912C833B4F00454AA5 /* WarGame.swift in Sources */,
 				EB6426852C833ADE00454AA5 /* WarGameSDKTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +415,7 @@
 		EB64268D2C833ADE00454AA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -424,6 +431,7 @@
 		EB64268E2C833ADE00454AA5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
