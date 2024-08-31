@@ -13,6 +13,7 @@
 		EB6426862C833ADE00454AA5 /* WarGameSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EB6426782C833ADE00454AA5 /* WarGameSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EB6426902C833B4F00454AA5 /* WarGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB64268F2C833B4F00454AA5 /* WarGame.swift */; };
 		EB6426912C833B4F00454AA5 /* WarGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB64268F2C833B4F00454AA5 /* WarGame.swift */; };
+		EB6426942C833C1300454AA5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426932C833C1300454AA5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		EB64267F2C833ADE00454AA5 /* WarGameSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarGameSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB6426842C833ADE00454AA5 /* WarGameSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGameSDKTests.swift; sourceTree = "<group>"; };
 		EB64268F2C833B4F00454AA5 /* WarGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGame.swift; sourceTree = "<group>"; };
+		EB6426932C833C1300454AA5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			children = (
 				EB6426782C833ADE00454AA5 /* WarGameSDK.h */,
 				EB64268F2C833B4F00454AA5 /* WarGame.swift */,
+				EB6426922C833BE000454AA5 /* SupportingFiles */,
 				EB6426792C833ADE00454AA5 /* WarGameSDK.docc */,
 			);
 			path = WarGameSDK;
@@ -87,6 +90,14 @@
 				EB6426842C833ADE00454AA5 /* WarGameSDKTests.swift */,
 			);
 			path = WarGameSDKTests;
+			sourceTree = "<group>";
+		};
+		EB6426922C833BE000454AA5 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				EB6426932C833C1300454AA5 /* Constants.swift */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +211,7 @@
 			files = (
 				EB6426902C833B4F00454AA5 /* WarGame.swift in Sources */,
 				EB64267A2C833ADE00454AA5 /* WarGameSDK.docc in Sources */,
+				EB6426942C833C1300454AA5 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
