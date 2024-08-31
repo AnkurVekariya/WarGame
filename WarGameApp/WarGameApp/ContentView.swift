@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WarGameSDK
 
 struct ContentView: View {
     var body: some View {
