@@ -72,12 +72,21 @@ public class WarGame: ObservableObject {
             }
         }
     }
+    
+    public func restartGame() {
+        self.players = []
+        self.currentRoundWinner = ""
+        self.deckId = ""
+        self.isGameStarted = false
+        self.showAlert = false
+        self.alertMessage = ""
+        self.numberOfPlayers = 2
+    }
 
     public func startNewGame(withNumberOfPlayers numberOfPlayers: Int) {
         self.numberOfPlayers = numberOfPlayers
         startGame(withNumberOfPlayers: numberOfPlayers)
     }
-    
 }
 
 extension WarGame {
@@ -114,20 +123,38 @@ extension WarGame {
     }
     
     private func determineRoundWinner(drawnCards: [(Player, Card)]) -> Player {
-        let highestCard = drawnCards.max { $0.1.value < $1.1.value }!
-        let highestCardPlayer = drawnCards.filter { $0.1.value == highestCard.1.value }
-
-        if highestCardPlayer.count == 1 {
-            return highestCardPlayer.first!.0
+        // Ensure there are cards drawn
+        guard !drawnCards.isEmpty else {
+            fatalError("No cards were drawn")
         }
-
-        let playerWithMostCards = highestCardPlayer.max { $0.0.pile?.count ?? 0 < $1.0.pile?.count ?? 1 }!
-        if highestCardPlayer.filter({ $0.0.pile?.count == playerWithMostCards.0.pile?.count }).count == 1 {
+        
+        // Find the highest card value
+        guard let highestCardValue = drawnCards.max(by: { $0.1.value < $1.1.value })?.1.value else {
+            fatalError("Failed to determine the highest card value")
+        }
+        
+        print("highestCardValue == \(highestCardValue)")
+        
+        // Filter players with the highest card value
+        let highestCardPlayers = drawnCards.filter { $0.1.value == highestCardValue }
+        
+        // If there is only one player with the highest card value, return that player
+        if highestCardPlayers.count == 1 {
+            return highestCardPlayers.first!.0
+        }
+        
+        // If there are multiple players with the highest card value, choose the one with the most remaining cards in their pile
+        let playerWithMostCards = highestCardPlayers.max(by: { ($0.0.pile?.count ?? 0) < ($1.0.pile?.count ?? 0) })
+        
+        // If there is a single player with the maximum count of cards, return that player
+        if let playerWithMostCards = playerWithMostCards, highestCardPlayers.filter({ $0.0.pile?.count == playerWithMostCards.0.pile?.count }).count == 1 {
             return playerWithMostCards.0
         }
-
-        return highestCardPlayer.randomElement()!.0
+        
+        // If still tied, return a random player from those with the highest card value
+        return highestCardPlayers.randomElement()!.0
     }
+
     
     private func updatePlayerPiles(with drawnCards: [(Player, Card)], winner: Player) {
         let winningCards = drawnCards.map { $0.1 }

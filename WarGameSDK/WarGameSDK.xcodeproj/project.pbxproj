@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB4F64E62C844E2F0058341D /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF20F2C8353F80063B44A /* Deck.swift */; };
+		EB4F64E72C844E310058341D /* DrawCardsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2112C8354C20063B44A /* DrawCardsModel.swift */; };
+		EB4F64E82C844E330058341D /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2132C8354EF0063B44A /* Card.swift */; };
+		EB4F64E92C844E350058341D /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2152C8355070063B44A /* Player.swift */; };
+		EB4F64EA2C844E490058341D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426932C833C1300454AA5 /* Constants.swift */; };
+		EB4F64EB2C844E4C0058341D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2172C8355300063B44A /* Extensions.swift */; };
 		EB64267A2C833ADE00454AA5 /* WarGameSDK.docc in Sources */ = {isa = PBXBuildFile; fileRef = EB6426792C833ADE00454AA5 /* WarGameSDK.docc */; };
 		EB6426802C833ADE00454AA5 /* WarGameSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB6426752C833ADE00454AA5 /* WarGameSDK.framework */; };
 		EB6426852C833ADE00454AA5 /* WarGameSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426842C833ADE00454AA5 /* WarGameSDKTests.swift */; };
@@ -247,8 +253,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB4F64E62C844E2F0058341D /* Deck.swift in Sources */,
 				EB6426912C833B4F00454AA5 /* WarGame.swift in Sources */,
+				EB4F64E82C844E330058341D /* Card.swift in Sources */,
+				EB4F64EB2C844E4C0058341D /* Extensions.swift in Sources */,
 				EB6426852C833ADE00454AA5 /* WarGameSDKTests.swift in Sources */,
+				EB4F64EA2C844E490058341D /* Constants.swift in Sources */,
+				EB4F64E92C844E350058341D /* Player.swift in Sources */,
+				EB4F64E72C844E310058341D /* DrawCardsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
