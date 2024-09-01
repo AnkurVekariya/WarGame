@@ -19,7 +19,6 @@ struct DrawnCardsView: View {
     let cardHeight: CGFloat = 120
     let cardSpacing: CGFloat = 10 // Space between cards
     let nameLabelHeight: CGFloat = 20
-   
     var body: some View {
         
         GeometryReader { geometry in
@@ -33,8 +32,7 @@ struct DrawnCardsView: View {
                 VStack {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: cardSpacing) {
-                            ForEach(cards.indices, id: \.self) { index in
-                                let card = cards[index]
+                            ForEach(Array(cards.enumerated()), id: \.element.code) { index, card in
                                 VStack {
                                     CardImageView(cardCode: card.code!)
                                         .scaledToFit()
@@ -49,7 +47,6 @@ struct DrawnCardsView: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 5))
                                         .frame(height: nameLabelHeight)
                                 }
-                                
                             }
                         }
                         .frame(width: geometry.size.width - 20)
@@ -57,12 +54,6 @@ struct DrawnCardsView: View {
 
                     }
                     .padding(.horizontal, 0)
-                    .onChange(of: cards) { newValue in
-                                    cardNames = newValue.map { $0.code! } // Debugging line to see updates
-                                    cardValues = newValue.map { $0.value }
-                                    print("Cards updated: \(cardNames)")
-                                    print("Cards Values: \(cardValues)")
-                                }
                 }
             }
             

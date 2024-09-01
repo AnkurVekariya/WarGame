@@ -25,8 +25,5 @@ struct CardImageView: View {
                     }
             }
         }
-        .onChange(of: cardCode) { newCode in
-            loader.loadImage(for: newCode)
-        }
     }
 }

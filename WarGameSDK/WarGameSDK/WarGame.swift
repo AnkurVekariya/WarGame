@@ -69,6 +69,9 @@ public class WarGame: ObservableObject {
         } else {
             DispatchQueue.main.async {
                 self.currentRoundWinner = winner.name
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.drawnCards = []
+                }
             }
         }
     }
@@ -130,14 +133,15 @@ extension WarGame {
         }
         
         // Find the highest card value
-        guard let highestCardValue = drawnCards.max(by: { $0.1.value < $1.1.value })?.1.value else {
-            fatalError("Failed to determine the highest card value")
-        }
+        guard let highestCardValue = drawnCards.map({ $0.1.numericValue }).max() else {
+               fatalError("Failed to determine the highest card value")
+           }
         
         print("highestCardValue == \(highestCardValue)")
         
         // Filter players with the highest card value
-        let highestCardPlayers = drawnCards.filter { $0.1.value == highestCardValue }
+        let highestCardPlayers = drawnCards.filter { $0.1.numericValue == highestCardValue }
+            
         
         // If there is only one player with the highest card value, return that player
         if highestCardPlayers.count == 1 {
@@ -168,10 +172,21 @@ extension WarGame {
 
         for (player, card) in drawnCards {
             if let index = players.firstIndex(where: { $0.id == player.id }) {
-                DispatchQueue.main.async {
-                    self.players[index].pile?.removeAll { $0.code == card.code }
-                }
+               DispatchQueue.main.async {
+                   self.removeCardFromPlayerPile(playerIndex: index, cardCode: card.code!)
+               }
             }
+        }
+    }
+    
+    func removeCardFromPlayerPile(playerIndex: Int, cardCode: String) {
+        guard playerIndex >= 0 && playerIndex < players.count else {
+            return
+        }
+        
+        // Find the index of the first occurrence of the card to remove
+        if let cardIndex = players[playerIndex].pile?.firstIndex(where: { $0.code == cardCode }) {
+            players[playerIndex].pile?.remove(at: cardIndex)
         }
     }
 }

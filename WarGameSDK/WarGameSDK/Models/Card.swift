@@ -26,6 +26,26 @@ public struct Card: Identifiable, Decodable, Equatable {
         case suit
         case value
     }
+    
+    // Convert card value to an integer for comparison
+    public var numericValue: Int {
+        switch value {
+        case "2"..."9":
+            return Int(value) ?? 0
+        case "10":
+            return 10
+        case "JACK":
+            return 11
+        case "QUEEN":
+            return 12
+        case "KING":
+            return 13
+        case "ACE":
+            return 14
+        default:
+            return 0 // Handle unexpected values
+        }
+    }
 }
 
 public struct Images: Decodable {

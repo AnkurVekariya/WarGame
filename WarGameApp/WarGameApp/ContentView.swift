@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var numberOfPlayers: Int = 2
     @State private var showPlayerSelection = true
     @State private var showWinnerMessage: Bool = false
+    @State private var isPlayRoundButtonEnabled = true
 
     var body: some View {
         GeometryReader { geometry in
@@ -42,14 +43,14 @@ struct ContentView: View {
                             
                         }
 
-                            // Display drawn cards with the name of the player who drew each card
-                            // Generate an array of player names for the drawn cards
-                            let playerNames = viewModel.drawnCards.indices.map { index in
-                                viewModel.players[index % viewModel.players.count].name
-                            }
-                            DrawnCardsView(cards: viewModel.drawnCards, playerNames: playerNames)
-                                .frame(width: geometry.size.width, height: 150) // Adjust height if needed
-                                .padding(.top, 10)
+                        // Display drawn cards with the name of the player who drew each card
+                        // Generate an array of player names for the drawn cards
+                        let playerNames = viewModel.drawnCards.indices.map { index in
+                            viewModel.players[index % viewModel.players.count].name
+                        }
+                        DrawnCardsView(cards: viewModel.drawnCards, playerNames: playerNames)
+                            .frame(width: geometry.size.width, height: 150) // Adjust height if needed
+                            .padding(.top, 10)
 
                         Spacer().frame(height: 50)
                         if showWinnerMessage {
@@ -63,15 +64,25 @@ struct ContentView: View {
                         VStack {
                             
                             Button("Play Round") {
+                                // Disable the button
+                                isPlayRoundButtonEnabled = false
+                                
                                 viewModel.playRound()
-                                    showWinnerMessage = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                                                   showWinnerMessage = false
-                                                               }
+                                
+                                showWinnerMessage = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                    showWinnerMessage = false
+                                }
+                                
+                                // Re-enable the button after 2.5 seconds
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                    isPlayRoundButtonEnabled = true
+                                }
                             }
                             .padding()
-                            .background(Color.blue) // Example background color
+                            .background(isPlayRoundButtonEnabled ? Color.blue : Color.gray)
                             .foregroundColor(.white)
+                            .disabled(!isPlayRoundButtonEnabled)
                             .cornerRadius(10)
                             
                         }
