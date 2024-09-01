@@ -95,18 +95,40 @@ struct PlayerSelectionView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Text("Number of Players: ")
-                Picker("Number of Players", selection: $numberOfPlayers) {
-                    ForEach(2..<5) { i in
-                        Text("\(i)").tag(i)
+            VStack {
+                Text("Select number of Players: ")
+                   .font(.headline) // Set font to headline
+                   .fontWeight(.bold) // Make text bold
+                   .foregroundColor(.white) // Set text color to white
+
+                ZStack {
+                    Color.gray // Background color for the picker
+                        .cornerRadius(8) // Round corners of the background
+                        .frame(height: 30) // Adjust height to fit the picker
+                    
+                    Picker("Number of Players", selection: $numberOfPlayers) {
+                        ForEach(2..<5) { i in
+                            Text("\(i)").tag(i)
+                        }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
                 }
-                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal) // Add horizontal padding to the picker container
             }
-            .padding()
-            Button("Start Game", action: onStartGame)
-                .padding()
+//            .padding()
+           
+            
+            Button(action: onStartGame) {
+                Text("Start Game")
+                    .font(.subheadline) // Larger font size for the button text
+                    .fontWeight(.bold) // Make text bold
+                    .foregroundColor(.white) // White text color
+                    .padding() // Padding inside the button
+                    .background(Color(red: 0.8, green: 0.6, blue: 0.0)) // Golden background color
+                    .cornerRadius(15) // Corner radius for rounded corners
+                    .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5) // Shadow for a slight 3D effect
+            }
+            .padding(.top, 50) // Add padding around the button
         }
     }
 }
@@ -170,6 +192,9 @@ struct ContentView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            ZStack {
+                Color(red: 0.0, green: 0.39, blue: 0.0)
+                    .ignoresSafeArea()  // Background color for the entire GeometryReader
             VStack {
                 if viewModel.isGameStarted {
                     VStack {
@@ -177,20 +202,20 @@ struct ContentView: View {
                             viewModel.playRound()
                         }
                         .padding()
-
+                        
                         Text("Current Round Winner: \(viewModel.currentRoundWinner)")
                             .padding()
-
+                        
                         // Display drawn cards with the name of the player who drew each card
-                                 if !viewModel.drawnCards.isEmpty {
-                                     // Generate an array of player names for the drawn cards
-                                     let playerNames = viewModel.drawnCards.indices.map { index in
-                                         viewModel.players[index % viewModel.players.count].name
-                                     }
-                                     DrawnCardsView(cards: viewModel.drawnCards, playerNames: playerNames)
-                                         .frame(width: geometry.size.width, height: 150) // Adjust height if needed
-                                 }
-
+                        if !viewModel.drawnCards.isEmpty {
+                            // Generate an array of player names for the drawn cards
+                            let playerNames = viewModel.drawnCards.indices.map { index in
+                                viewModel.players[index % viewModel.players.count].name
+                            }
+                            DrawnCardsView(cards: viewModel.drawnCards, playerNames: playerNames)
+                                .frame(width: geometry.size.width, height: 150) // Adjust height if needed
+                        }
+                        
                         // Display player piles with overlapping cards
                         Text("Player Piles")
                             .font(.headline)
@@ -199,10 +224,12 @@ struct ContentView: View {
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.6)
                     }
                 } else if showPlayerSelection {
+                    Spacer()
                     PlayerSelectionView(numberOfPlayers: $numberOfPlayers, onStartGame: {
                         viewModel.startNewGame(withNumberOfPlayers: numberOfPlayers)
                         showPlayerSelection = false
                     })
+                    Spacer()
                 } else {
                     Button("Restart Game") {
                         viewModel.restartGame()
@@ -211,6 +238,7 @@ struct ContentView: View {
                     .padding()
                 }
             }
+        }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
                     title: Text("Game Over"),
