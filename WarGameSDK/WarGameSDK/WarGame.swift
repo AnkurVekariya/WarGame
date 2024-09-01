@@ -75,6 +75,7 @@ public class WarGame: ObservableObject {
     
     public func restartGame() {
         self.players = []
+        self.drawnCards = []
         self.currentRoundWinner = ""
         self.deckId = ""
         self.isGameStarted = false

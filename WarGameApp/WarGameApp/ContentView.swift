@@ -13,17 +13,28 @@ struct PlaceholderImageView: View {
     let playerName: String
     let wins: Int
     let imageSize: CGSize = CGSize(width: 100, height: 150)
+    let cards: [Card]
 
     var body: some View {
         VStack {
             ZStack(alignment: .bottomLeading) {
-                Image(systemName: "card.fill") // Placeholder image (use a system image or a custom image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: imageSize.width, height: imageSize.height)
-                    .background(Color.gray.opacity(0.2)) // Background color for image
-                    .cornerRadius(10)
-                    .shadow(radius: 10, x: 0, y: 5) // Shadow for the placeholder image
+                // Create a ZStack for the 3D effect
+                ForEach(0..<5) { index in
+                    Image(systemName: "card.fill") // Placeholder image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: imageSize.width, height: imageSize.height)
+                        .background(LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.8), Color.orange.opacity(0.6)]),
+                                                   startPoint: .top, endPoint: .bottom))
+                        .cornerRadius(10)
+                        .shadow(color: Color.black.opacity(0.5), radius: 10, x: 5, y: 5) // Black shadow for depth
+                        .rotation3DEffect(
+                            .degrees(Double(index) * 2), // Rotate slightly for the bundle effect
+                            axis: (x: 1, y: 0, z: 0),
+                            perspective: 0.5
+                        )
+                        .offset(x: CGFloat(index * -5), y: CGFloat(index * 2)) // Offset each card to create the bundle effect
+                }
 
                 VStack(alignment: .leading) {
                     Text(playerName)
@@ -41,12 +52,30 @@ struct PlaceholderImageView: View {
                         .background(Color.red.opacity(0.7)) // Background color for wins label
                         .cornerRadius(5)
                         .shadow(radius: 3, x: 1, y: 1) // Shadow for wins label
+                    
+                    VStack(spacing: 2) { // Stack two lines of text with a small space
+                        Text("Cards")
+                            .font(.caption2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 6)
+                        Text("\(cards.count)")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 6)
+                     }
+                    .padding(.top, 5)
+                           .background(Color.yellow)
+                           .clipShape(Circle())
+                           .foregroundColor(.black)
+                           .shadow(radius: 3, x: 1, y: 1) // Shadow for badge
+                           .padding([.trailing, .top], 10)
                 }
-                .padding([.leading, .bottom], 10)
+                           
             }
         }
     }
 }
+
 
 struct StackedCardView: View {
     let cards: [Card]
@@ -68,22 +97,38 @@ struct StackedCardView: View {
 struct PlayerPilesView: View {
     let players: [Player]
     let columns = [GridItem(.flexible()), GridItem(.flexible())] // Define 2-column grid
-
+    
     var body: some View {
         GeometryReader { geometry in
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(players) { player in
-                        VStack(alignment: .leading) {
-                            PlaceholderImageView(playerName: player.name, wins: player.battlesWon)
-                                .frame(width: (geometry.size.width / 2) - 20, height: min(300, geometry.size.height * 0.3))
-                                .padding(.bottom, 10)
+            VStack {
+                Spacer().frame(height: players.count == 2 ? 50 : 30) // Pushes content to the bottom
+                
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(players) { player in
+                            
+                            if let pile = player.pile, !pile.isEmpty {
+                                VStack(alignment: .leading) {
+                                    PlaceholderImageView(playerName: player.name, wins: player.battlesWon, cards: pile)
+                                        .frame(width: 10, height: 150)
+                                        .padding(.bottom, 10)
 
-                            // Removed redundant "Wins" label here as it's now part of the card placeholder
+                                }
+                            } else {
+                                Text("No cards")
+                                    .foregroundColor(.gray)
+                                    .padding(.top, 2)
+                            }
+                            
+               
                         }
                     }
+                    .padding()
                 }
-                .padding()
+                
+//                if players.count == 2 {
+//                    Spacer() // Additional space to ensure bottom alignment with only 2 players
+//                }
             }
         }
     }
@@ -124,7 +169,7 @@ struct PlayerSelectionView: View {
                     .fontWeight(.bold) // Make text bold
                     .foregroundColor(.white) // White text color
                     .padding() // Padding inside the button
-                    .background(Color(red: 0.8, green: 0.6, blue: 0.0)) // Golden background color
+                    .background(Color.darkYellow) // Golden background color
                     .cornerRadius(15) // Corner radius for rounded corners
                     .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5) // Shadow for a slight 3D effect
             }
@@ -145,39 +190,52 @@ struct DrawnCardsView: View {
     let nameLabelHeight: CGFloat = 20
    
     var body: some View {
-        VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: cardSpacing) {
-                    ForEach(cards.indices, id: \.self) { index in
-                        let card = cards[index]
-                        VStack {
-                            CardImageView(cardCode: card.code!)
-                                .scaledToFit()
-                                .frame(width: cardWidth, height: cardHeight)
-                                .padding(2)
-                            
-                            Text(playerNames[index])
-                                .font(.caption)
-                                .foregroundColor(.black)
-                                .padding(4)
-                                .background(Color.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
-                                .frame(height: nameLabelHeight)
+        
+        GeometryReader { geometry in
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(Color.yellow.opacity(0.2)) // White background for the table
+                    .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 5) // Shadow for 3D effect
+                    .frame(width: geometry.size.width - 20 , height: cardHeight + 50)
+                    .padding(.horizontal, 10)
+                
+                VStack {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: cardSpacing) {
+                            ForEach(cards.indices, id: \.self) { index in
+                                let card = cards[index]
+                                VStack {
+                                    CardImageView(cardCode: card.code!)
+                                        .scaledToFit()
+                                        .frame(width: cardWidth, height: cardHeight)
+                                        .padding(2)
+                                    
+                                    Text(playerNames[index])
+                                        .font(.caption)
+                                        .foregroundColor(.black)
+                                        .padding(4)
+                                        .background(Color.white)
+                                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                                        .frame(height: nameLabelHeight)
+                                }
+                                
+                            }
                         }
-                        
+                        .frame(width: totalWidth) // Set the frame width based on total width of cards
+                        .padding(.horizontal, (UIScreen.main.bounds.width - totalWidth) / 2) // Center horizontally
                     }
+                    .padding(.horizontal, 0)
+                    .onChange(of: cards) { newValue in
+                                    cardNames = newValue.map { $0.code! } // Debugging line to see updates
+                                    cardValues = newValue.map { $0.value }
+                                    print("Cards updated: \(cardNames)")
+                                    print("Cards Values: \(cardValues)")
+                                }
                 }
-                .frame(width: totalWidth) // Set the frame width based on total width of cards
-                .padding(.horizontal, (UIScreen.main.bounds.width - totalWidth) / 2) // Center horizontally
             }
-            .padding()
-            .onChange(of: cards) { newValue in
-                            cardNames = newValue.map { $0.code! } // Debugging line to see updates
-                            cardValues = newValue.map { $0.value }
-                            print("Cards updated: \(cardNames)")
-                            print("Cards Values: \(cardValues)")
-                        }
+            
         }
+
     }
 
     private var totalWidth: CGFloat {
@@ -189,6 +247,7 @@ struct ContentView: View {
     @StateObject private var viewModel = WarGame()
     @State private var numberOfPlayers: Int = 2
     @State private var showPlayerSelection = true
+    @State private var showWinnerMessage: Bool = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -198,30 +257,84 @@ struct ContentView: View {
             VStack {
                 if viewModel.isGameStarted {
                     VStack {
-                        Button("Play Round") {
-                            viewModel.playRound()
-                        }
-                        .padding()
-                        
-                        Text("Current Round Winner: \(viewModel.currentRoundWinner)")
+                        HStack {
+                            Button(action: {
+                                viewModel.restartGame()
+                                showPlayerSelection = true
+                            }) {
+                                HStack {
+                                    Image(systemName: "arrow.counterclockwise") // Restart icon
+                                        .foregroundColor(.black) // Black color for the icon
+                                        .bold()
+                                }
+                                .padding()
+                                .background(Color.darkYellow) // Golden background color
+                                .cornerRadius(10) // Rounded corners
+                            }
                             .padding()
-                        
-                        // Display drawn cards with the name of the player who drew each card
-                        if !viewModel.drawnCards.isEmpty {
+                            Spacer()
+                            
+                        }
+
+                            // Display drawn cards with the name of the player who drew each card
                             // Generate an array of player names for the drawn cards
                             let playerNames = viewModel.drawnCards.indices.map { index in
                                 viewModel.players[index % viewModel.players.count].name
                             }
                             DrawnCardsView(cards: viewModel.drawnCards, playerNames: playerNames)
                                 .frame(width: geometry.size.width, height: 150) // Adjust height if needed
+                                .padding(.top, 10)
+
+//                        if playerNames.count == 2 {
+//                            Spacer().frame(height: 80)
+//                        } else {
+//                            Spacer().frame(height: 30)
+//                        }
+                        Spacer().frame(height: 50)
+                        if showWinnerMessage {
+                            Text("\(viewModel.currentRoundWinner) wins !! ")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.bottom, 2)
+                                           
                         }
                         
-                        // Display player piles with overlapping cards
-                        Text("Player Piles")
-                            .font(.headline)
+                        VStack {
+                            
+                            Button("Play Round") {
+                                viewModel.playRound()
+                                    showWinnerMessage = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                                                   showWinnerMessage = false
+                                                               }
+                            }
                             .padding()
+                            .background(Color.blue) // Example background color
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            
+                        }
+                        .padding(.top)
+                        
+//                        // Display player piles with overlapping cards
+//                        Text("Player Piles")
+//                            .font(.headline)
+//                            .padding()
+                        
                         PlayerPilesView(players: viewModel.players)
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.6)
+                        
+//                        Spacer()
+//                        
+//                        PlayerPilesView(players: viewModel.players)
+//                            .frame(width: geometry.size.width, height: CGFloat(viewModel.players.count) * 100 ) // Adjust height as needed
+//                            
+//                            .background(Color.green) // Background color for visibility
+//                            .cornerRadius(10) // Rounded corners
+//                            .shadow(radius: 10) // Shadow effect
+//                            .padding(.bottom) // Padding to avoid sticking to screen edge
+//                            .ignoresSafeArea()
+
                     }
                 } else if showPlayerSelection {
                     Spacer()
@@ -230,14 +343,17 @@ struct ContentView: View {
                         showPlayerSelection = false
                     })
                     Spacer()
-                } else {
-                    Button("Restart Game") {
-                        viewModel.restartGame()
-                        showPlayerSelection = true
-                    }
-                    .padding()
+                }
+                else {
+                    ProgressView()
+                                       .progressViewStyle(CircularProgressViewStyle())
+                                       .tint(Color.white)
+                                       .scaleEffect(1.5) // Adjust the size of the spinner
+                                       .padding()
                 }
             }
+                
+
         }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(

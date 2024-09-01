@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB4F64EE2C8457710058341D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64ED2C8457710058341D /* Extensions.swift */; };
 		EB6426A22C834FCA00454AA5 /* WarGameAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426A12C834FCA00454AA5 /* WarGameAppApp.swift */; };
 		EB6426A42C834FCA00454AA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426A32C834FCA00454AA5 /* ContentView.swift */; };
 		EB6426A62C834FCB00454AA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB6426A52C834FCB00454AA5 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB4F64ED2C8457710058341D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EB64269E2C834FCA00454AA5 /* WarGameApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarGameApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB6426A12C834FCA00454AA5 /* WarGameAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGameAppApp.swift; sourceTree = "<group>"; };
 		EB6426A32C834FCA00454AA5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -71,6 +73,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB4F64EC2C84574F0058341D /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				EB4F64ED2C8457710058341D /* Extensions.swift */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		EB6426952C834FCA00454AA5 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +106,7 @@
 			children = (
 				EB6426A12C834FCA00454AA5 /* WarGameAppApp.swift */,
 				EB6426A32C834FCA00454AA5 /* ContentView.swift */,
+				EB4F64EC2C84574F0058341D /* SupportingFiles */,
 				EB6426A52C834FCB00454AA5 /* Assets.xcassets */,
 				EB6426A72C834FCB00454AA5 /* Preview Content */,
 			);
@@ -258,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB6426A42C834FCA00454AA5 /* ContentView.swift in Sources */,
+				EB4F64EE2C8457710058341D /* Extensions.swift in Sources */,
 				EB6426A22C834FCA00454AA5 /* WarGameAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
