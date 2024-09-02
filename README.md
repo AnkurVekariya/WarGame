@@ -4,7 +4,7 @@ Welcome to the WarGame project! This README will guide you on how to get the pro
 ## Demo
 
 [Click here to watch the demo video](https://github.com/AnkurVekariya/WarGame/blob/main/Assets/war_game_demo.mp4)
-[demo video](./Assets/war_game_demo.mp4)
+
 [Screens](./Assets/3.png)
 
 ## Running This Project
