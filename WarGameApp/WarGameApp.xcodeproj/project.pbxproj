@@ -15,6 +15,15 @@
 		EB4F64F92C848D1A0058341D /* DrawnCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64F82C848D1A0058341D /* DrawnCardsView.swift */; };
 		EB4F64FC2C848DD20058341D /* CardImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64FB2C848DD20058341D /* CardImageViewModel.swift */; };
 		EB4F64FE2C848E040058341D /* CardImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64FD2C848E040058341D /* CardImageView.swift */; };
+		EB4F65022C85097F0058341D /* PlayerPilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64F42C848C9D0058341D /* PlayerPilesView.swift */; };
+		EB4F65032C8509860058341D /* StackedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64F22C848C680058341D /* StackedCardView.swift */; };
+		EB4F65042C8509880058341D /* PlaceholderImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64F02C848C1A0058341D /* PlaceholderImageView.swift */; };
+		EB4F65052C85098B0058341D /* DrawnCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64F82C848D1A0058341D /* DrawnCardsView.swift */; };
+		EB4F65062C85098D0058341D /* CardImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64FD2C848E040058341D /* CardImageView.swift */; };
+		EB4F65072C85098F0058341D /* CardImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64FB2C848DD20058341D /* CardImageViewModel.swift */; };
+		EB4F65082C8509920058341D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426A32C834FCA00454AA5 /* ContentView.swift */; };
+		EB4F650D2C850DDB0058341D /* PlayerSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64F62C848CDD0058341D /* PlayerSelectionView.swift */; };
+		EB4F650E2C850DF10058341D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64ED2C8457710058341D /* Extensions.swift */; };
 		EB6426A22C834FCA00454AA5 /* WarGameAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426A12C834FCA00454AA5 /* WarGameAppApp.swift */; };
 		EB6426A42C834FCA00454AA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426A32C834FCA00454AA5 /* ContentView.swift */; };
 		EB6426A62C834FCB00454AA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB6426A52C834FCB00454AA5 /* Assets.xcassets */; };
@@ -209,6 +218,8 @@
 				EB6426B02C834FCB00454AA5 /* PBXTargetDependency */,
 			);
 			name = WarGameAppTests;
+			packageProductDependencies = (
+			);
 			productName = WarGameAppTests;
 			productReference = EB6426AE2C834FCB00454AA5 /* WarGameAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -263,6 +274,8 @@
 				Base,
 			);
 			mainGroup = EB6426952C834FCA00454AA5;
+			packageReferences = (
+			);
 			productRefGroup = EB64269F2C834FCA00454AA5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -322,7 +335,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB4F65032C8509860058341D /* StackedCardView.swift in Sources */,
+				EB4F65022C85097F0058341D /* PlayerPilesView.swift in Sources */,
+				EB4F65062C85098D0058341D /* CardImageView.swift in Sources */,
 				EB6426B32C834FCB00454AA5 /* WarGameAppTests.swift in Sources */,
+				EB4F65072C85098F0058341D /* CardImageViewModel.swift in Sources */,
+				EB4F65082C8509920058341D /* ContentView.swift in Sources */,
+				EB4F650D2C850DDB0058341D /* PlayerSelectionView.swift in Sources */,
+				EB4F65042C8509880058341D /* PlaceholderImageView.swift in Sources */,
+				EB4F650E2C850DF10058341D /* Extensions.swift in Sources */,
+				EB4F65052C85098B0058341D /* DrawnCardsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

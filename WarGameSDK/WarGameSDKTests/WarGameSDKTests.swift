@@ -36,7 +36,6 @@ final class WarGameSDKTests: XCTestCase {
        }
     
     // Define your mock cards
-    // Define your mock cards
        func createMockCard(code: String, image: String?, suit: String?, value: String) -> Card {
            return Card(
                code: code,

@@ -16,6 +16,7 @@ struct PlayerPilesView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
+                
                 Spacer().frame(height: players.count == 2 ? 50 : 30) // Pushes content to the bottom
                 
                 ScrollView {

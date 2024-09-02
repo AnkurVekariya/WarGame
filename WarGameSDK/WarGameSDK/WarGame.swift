@@ -49,6 +49,7 @@ public class WarGame: ObservableObject {
     }
     
     public func playRound() {
+        print("play round func called")
         guard players.count > 1 else { return }
 
         let drawnCards = players.compactMap { player -> (Player, Card)? in
