@@ -13,6 +13,8 @@
 		EB4F64E92C844E350058341D /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2152C8355070063B44A /* Player.swift */; };
 		EB4F64EA2C844E490058341D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426932C833C1300454AA5 /* Constants.swift */; };
 		EB4F64EB2C844E4C0058341D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFBF2172C8355300063B44A /* Extensions.swift */; };
+		EB4F65572C85BD7D0058341D /* WarGameNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F65562C85BD7D0058341D /* WarGameNetworkService.swift */; };
+		EB4F65582C85BD7D0058341D /* WarGameNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F65562C85BD7D0058341D /* WarGameNetworkService.swift */; };
 		EB64267A2C833ADE00454AA5 /* WarGameSDK.docc in Sources */ = {isa = PBXBuildFile; fileRef = EB6426792C833ADE00454AA5 /* WarGameSDK.docc */; };
 		EB6426802C833ADE00454AA5 /* WarGameSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB6426752C833ADE00454AA5 /* WarGameSDK.framework */; };
 		EB6426852C833ADE00454AA5 /* WarGameSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426842C833ADE00454AA5 /* WarGameSDKTests.swift */; };
@@ -38,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB4F65562C85BD7D0058341D /* WarGameNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGameNetworkService.swift; sourceTree = "<group>"; };
 		EB6426752C833ADE00454AA5 /* WarGameSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WarGameSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB6426782C833ADE00454AA5 /* WarGameSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WarGameSDK.h; sourceTree = "<group>"; };
 		EB6426792C833ADE00454AA5 /* WarGameSDK.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = WarGameSDK.docc; sourceTree = "<group>"; };
@@ -71,6 +74,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB4F65552C85BD280058341D /* DataSeviceLayer */ = {
+			isa = PBXGroup;
+			children = (
+				EB4F65562C85BD7D0058341D /* WarGameNetworkService.swift */,
+			);
+			path = DataSeviceLayer;
+			sourceTree = "<group>";
+		};
 		EB64266B2C833ADE00454AA5 = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +105,7 @@
 			children = (
 				EB6426782C833ADE00454AA5 /* WarGameSDK.h */,
 				EB64268F2C833B4F00454AA5 /* WarGame.swift */,
+				EB4F65552C85BD280058341D /* DataSeviceLayer */,
 				EBFBF20E2C8353E40063B44A /* Models */,
 				EB6426922C833BE000454AA5 /* SupportingFiles */,
 				EB6426792C833ADE00454AA5 /* WarGameSDK.docc */,
@@ -246,6 +258,7 @@
 				EBFBF2162C8355070063B44A /* Player.swift in Sources */,
 				EB64267A2C833ADE00454AA5 /* WarGameSDK.docc in Sources */,
 				EB6426942C833C1300454AA5 /* Constants.swift in Sources */,
+				EB4F65572C85BD7D0058341D /* WarGameNetworkService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +274,7 @@
 				EB4F64EA2C844E490058341D /* Constants.swift in Sources */,
 				EB4F64E92C844E350058341D /* Player.swift in Sources */,
 				EB4F64E72C844E310058341D /* DrawCardsModel.swift in Sources */,
+				EB4F65582C85BD7D0058341D /* WarGameNetworkService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

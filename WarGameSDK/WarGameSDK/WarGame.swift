@@ -22,31 +22,46 @@ public class WarGame: ObservableObject {
     
     private var numberOfPlayers: Int = 2
     
+    let networkService = WarGameNetworkService()
+    
     public init() {}
     
-    public func startGame(withNumberOfPlayers numberOfPlayers: Int) {
-        guard numberOfPlayers > 0 && numberOfPlayers <= 4 else { return }
-
-        let url = URL(string: "\(Utility.baseUrl)/new/shuffle/")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else { return }
-            do {
-                self.deck = try JSONDecoder().decode(Deck.self, from: data)
-                self.deckId = self.deck?.deck_id ?? ""
-                
-                DispatchQueue.main.async {
-                    self.dealCards(to: numberOfPlayers)
+    func startGame(withNumberOfPlayers numberOfPlayers: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+            guard numberOfPlayers > 1 && numberOfPlayers <= 4 else {
+                let error = NSError(domain: "GameServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid number of players"])
+                completion(.failure(error))
+                return
+            }
+        
+            
+        self.networkService.fetchDeck { [weak self] result in
+                switch result {
+                case .success(let deck):
+                    self?.deck = deck
+                    self?.deckId = deck.deck_id
+                    
+                    DispatchQueue.main.async {
+                        self?.dealCards(to: numberOfPlayers, completion: { result in
+                            switch result {
+                            case .success():
+                                completion(.success(()))
+                            case .failure(let error):
+                                DispatchQueue.main.async {
+                                    self?.alertMessage = "\(error)"
+                                    self?.showAlert = true
+                                }
+                            }
+                        })
+                        
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
-                
-            } catch {
-                print("Failed to decode deck: \(error)")
             }
         }
-        task.resume()
-    }
     
     public func playRound() {
         print("play round func called")
@@ -90,44 +105,60 @@ public class WarGame: ObservableObject {
 
     public func startNewGame(withNumberOfPlayers numberOfPlayers: Int) {
         self.numberOfPlayers = numberOfPlayers
-        startGame(withNumberOfPlayers: numberOfPlayers)
+        startGame(withNumberOfPlayers: numberOfPlayers, completion: { result in
+            switch result {
+            case .success():
+                break;
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.alertMessage = "\(error)"
+                    self.showAlert = true
+                }
+            }
+        })
     }
 }
 
 extension WarGame {
     
-    private func dealCards(to numberOfPlayers: Int) {
-        
-        guard let deckId = deck?.deck_id else { return }
-
-        let url = URL(string: "\(Utility.baseUrl)/\(deckId)/draw/?count=\(numberOfPlayers * 52)")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else { return }
-            do {
-                let cardsResponse = try JSONDecoder().decode(DrawCardsModel.self, from: data)
-                guard let cards = cardsResponse.cards else {
-                    return
-                }
-                let dealtCards = Array(cards.prefix(numberOfPlayers * 52))
-                let cardChunks = dealtCards.chunked(into: dealtCards.count / numberOfPlayers)
-
-                DispatchQueue.main.async {
-                    self.players = cardChunks.prefix(numberOfPlayers).enumerated().map { index, cards in
-                        Player(name: "Player \(index + 1)", pile: cards)
-                    }
-                    self.isGameStarted = true
-                }
-            } catch {
-                print("Failed to decode cards: \(error)")
-            }
-        }
-        task.resume()
-    }
+    private func dealCards(to numberOfPlayers: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+           guard let deckId = deck?.deck_id else {
+               let error = NSError(domain: "GameServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Deck ID is missing"])
+               completion(.failure(error))
+               return
+           }
+           
+           let cardCount = numberOfPlayers * 52
+           
+        self.networkService.fetchCards(deckId: deckId, count: cardCount) { [weak self] result in
+               switch result {
+               case .success(let cardsResponse):
+                   guard let cards = cardsResponse.cards else {
+                       let error = NSError(domain: "GameServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No cards in response"])
+                       completion(.failure(error))
+                       return
+                   }
+                   
+                   let dealtCards = Array(cards.prefix(cardCount))
+                   let cardChunks = dealtCards.chunked(into: dealtCards.count / numberOfPlayers)
+                   
+                   DispatchQueue.main.async {
+                       self?.players = cardChunks.prefix(numberOfPlayers).enumerated().map { index, cards in
+                           Player(name: "Player \(index + 1)", pile: cards)
+                       }
+                       self?.isGameStarted = true
+                       completion(.success(()))
+                   }
+                   
+               case .failure(let error):
+                   DispatchQueue.main.async {
+                       completion(.failure(error))
+                   }
+               }
+           }
+       }
     
-    private func determineRoundWinner(drawnCards: [(Player, Card)]) -> Player {
+    public func determineRoundWinner(drawnCards: [(Player, Card)]) -> Player {
         // Ensure there are cards drawn
         guard !drawnCards.isEmpty else {
             fatalError("No cards were drawn")
@@ -187,7 +218,10 @@ extension WarGame {
         
         // Find the index of the first occurrence of the card to remove
         if let cardIndex = players[playerIndex].pile?.firstIndex(where: { $0.code == cardCode }) {
-            players[playerIndex].pile?.remove(at: cardIndex)
+            DispatchQueue.main.async {
+                self.players[playerIndex].pile?.remove(at: cardIndex)
+            }
+           
         }
     }
 }
