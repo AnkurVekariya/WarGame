@@ -24,6 +24,8 @@
 		EB4F65082C8509920058341D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426A32C834FCA00454AA5 /* ContentView.swift */; };
 		EB4F650D2C850DDB0058341D /* PlayerSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64F62C848CDD0058341D /* PlayerSelectionView.swift */; };
 		EB4F650E2C850DF10058341D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F64ED2C8457710058341D /* Extensions.swift */; };
+		EB4F65522C85AA690058341D /* WarGameSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB4F65512C85AA690058341D /* WarGameSDK.framework */; };
+		EB4F65532C85AA690058341D /* WarGameSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB4F65512C85AA690058341D /* WarGameSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EB6426A22C834FCA00454AA5 /* WarGameAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426A12C834FCA00454AA5 /* WarGameAppApp.swift */; };
 		EB6426A42C834FCA00454AA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6426A32C834FCA00454AA5 /* ContentView.swift */; };
 		EB6426A62C834FCB00454AA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB6426A52C834FCB00454AA5 /* Assets.xcassets */; };
@@ -50,6 +52,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		EB4F65542C85AA690058341D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EB4F65532C85AA690058341D /* WarGameSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		EB4F64ED2C8457710058341D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EB4F64F02C848C1A0058341D /* PlaceholderImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImageView.swift; sourceTree = "<group>"; };
@@ -59,6 +75,7 @@
 		EB4F64F82C848D1A0058341D /* DrawnCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawnCardsView.swift; sourceTree = "<group>"; };
 		EB4F64FB2C848DD20058341D /* CardImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageViewModel.swift; sourceTree = "<group>"; };
 		EB4F64FD2C848E040058341D /* CardImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageView.swift; sourceTree = "<group>"; };
+		EB4F65512C85AA690058341D /* WarGameSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WarGameSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB64269E2C834FCA00454AA5 /* WarGameApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarGameApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB6426A12C834FCA00454AA5 /* WarGameAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarGameAppApp.swift; sourceTree = "<group>"; };
 		EB6426A32C834FCA00454AA5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB4F65522C85AA690058341D /* WarGameSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +143,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		EB4F65502C85AA690058341D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EB4F65512C85AA690058341D /* WarGameSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EB6426952C834FCA00454AA5 = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +158,7 @@
 				EB6426B12C834FCB00454AA5 /* WarGameAppTests */,
 				EB6426BB2C834FCB00454AA5 /* WarGameAppUITests */,
 				EB64269F2C834FCA00454AA5 /* Products */,
+				EB4F65502C85AA690058341D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -194,6 +221,7 @@
 				EB64269A2C834FCA00454AA5 /* Sources */,
 				EB64269B2C834FCA00454AA5 /* Frameworks */,
 				EB64269C2C834FCA00454AA5 /* Resources */,
+				EB4F65542C85AA690058341D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
