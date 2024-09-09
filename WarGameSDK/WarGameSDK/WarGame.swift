@@ -18,6 +18,8 @@ public class WarGame: ObservableObject {
     @Published public var currentRoundWinner: String = ""
     @Published public var isGameStarted = false
     
+    var playerDict: [String: Int] = [:]
+    
     public var deck: Deck?
     
     private var numberOfPlayers: Int = 2
@@ -41,7 +43,7 @@ public class WarGame: ObservableObject {
                     self?.deckId = deck.deck_id
                     
                     DispatchQueue.main.async {
-                        self?.dealCards(to: numberOfPlayers, completion: { result in
+                        self?.dealCards(to: numberOfPlayers, isFromReShuffled: false, completion: { result in
                             switch result {
                             case .success():
                                 completion(.success(()))
@@ -121,42 +123,55 @@ public class WarGame: ObservableObject {
 
 extension WarGame {
     
-    private func dealCards(to numberOfPlayers: Int, completion: @escaping (Result<Void, Error>) -> Void) {
-           guard let deckId = deck?.deck_id else {
-               let error = NSError(domain: "GameServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Deck ID is missing"])
-               completion(.failure(error))
-               return
-           }
-           
-           let cardCount = numberOfPlayers * 52
-           
+    private func dealCards(to numberOfPlayers: Int, isFromReShuffled: Bool?, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let deckId = deck?.deck_id else {
+            let error = NSError(domain: "GameServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Deck ID is missing"])
+            completion(.failure(error))
+            return
+        }
+        
+        let cardCount = numberOfPlayers * 52
+        
         self.networkService.fetchCards(deckId: deckId, count: cardCount) { [weak self] result in
-               switch result {
-               case .success(let cardsResponse):
-                   guard let cards = cardsResponse.cards else {
-                       let error = NSError(domain: "GameServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No cards in response"])
-                       completion(.failure(error))
-                       return
-                   }
-                   
-                   let dealtCards = Array(cards.prefix(cardCount))
-                   let cardChunks = dealtCards.chunked(into: dealtCards.count / numberOfPlayers)
-                   
-                   DispatchQueue.main.async {
-                       self?.players = cardChunks.prefix(numberOfPlayers).enumerated().map { index, cards in
-                           Player(name: "Player \(index + 1)", pile: cards)
-                       }
-                       self?.isGameStarted = true
-                       completion(.success(()))
-                   }
-                   
-               case .failure(let error):
-                   DispatchQueue.main.async {
-                       completion(.failure(error))
-                   }
-               }
-           }
-       }
+            switch result {
+            case .success(let cardsResponse):
+                guard let cards = cardsResponse.cards else {
+                    let error = NSError(domain: "GameServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No cards in response"])
+                    completion(.failure(error))
+                    return
+                }
+                
+                let dealtCards = Array(cards.prefix(cardCount))
+                let cardChunks = dealtCards.chunked(into: dealtCards.count / numberOfPlayers)
+                
+                print("isFromReShuffled == \(self!.playerDict)")
+                
+                if !(isFromReShuffled ?? false) {
+                    DispatchQueue.main.async {
+                        self?.players = cardChunks.prefix(numberOfPlayers).enumerated().map { index, cards in
+                            Player(name: "Player \(index + 1)", pile: cards, battlesWon: self!.playerDict["Player \(index + 1)"] ?? 0 )
+                        }
+                    }
+                } else {
+                    // When isFromReShuffled is true, only update the piles
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        for (index, cards) in cardChunks.prefix(numberOfPlayers).enumerated() {
+                            self.players[index].pile = cards
+                        }
+                    }
+                }
+                
+                self?.isGameStarted = true
+                completion(.success(()))
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
     
     public func determineRoundWinner(drawnCards: [(Player, Card)]) -> Player {
         // Ensure there are cards drawn
@@ -180,6 +195,28 @@ extension WarGame {
             return highestCardPlayers.first!.0
         }
         
+        if highestCardPlayers.count == 1 {
+            let winningPlayer = highestCardPlayers.first!.0
+            
+            // Check if the player has won 5 games
+            if winningPlayer.battlesWon == 5 {
+                print("reshuffle called!!!")
+                self.reShuffleGame(withNumberOfPlayers: self.numberOfPlayers, completion: { result in
+                    switch result {
+                    case .success():
+                        break;
+                    case .failure(let error):
+                        DispatchQueue.main.async {
+                            self.alertMessage = "\(error)"
+                            self.showAlert = true
+                        }
+                    }
+                })
+
+            }
+            
+            return winningPlayer
+        }
         // If there are multiple players with the highest card value, choose the one with the most remaining cards in their pile
         let playerWithMostCards = highestCardPlayers.max(by: { ($0.0.pile?.count ?? 0) < ($1.0.pile?.count ?? 0) })
         
@@ -224,4 +261,41 @@ extension WarGame {
            
         }
     }
+    
+    public func reShuffleGame(withNumberOfPlayers numberOfPlayers: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+            guard numberOfPlayers > 1 && numberOfPlayers <= 4 else {
+                let error = NSError(domain: "GameServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid number of players"])
+                completion(.failure(error))
+                return
+            }
+        
+            
+        self.networkService.fetchDeck { [weak self] result in
+                switch result {
+                case .success(let deck):
+                    self?.deck = deck
+                    self?.deckId = deck.deck_id
+                    
+                    DispatchQueue.main.async {
+                        self?.dealCards(to: numberOfPlayers, isFromReShuffled: true, completion: { result in
+                            switch result {
+                            case .success():
+                                completion(.success(()))
+                            case .failure(let error):
+                                DispatchQueue.main.async {
+                                    self?.alertMessage = "\(error)"
+                                    self?.showAlert = true
+                                }
+                            }
+                        })
+                        
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
 }
