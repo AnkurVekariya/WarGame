@@ -14,14 +14,14 @@ class CardImageLoader: ObservableObject {
 
     func loadImage(for cardCode: String) {
         if let cachedImage = imageCache.object(forKey: cardCode as NSString) {
-            self.image = cachedImage
+            self.image = nil
             return
         }
 
         let url = URL(string: "https://deckofcardsapi.com/static/img/\(cardCode).png")!
         URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data, let image = UIImage(data: data) else { return }
-            DispatchQueue.main.async {
+            DispatchQueue.main {
                 self.image = image
                 self.imageCache.setObject(image, forKey: cardCode as NSString)
             }
