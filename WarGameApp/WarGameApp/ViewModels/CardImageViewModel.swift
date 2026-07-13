@@ -10,7 +10,7 @@ import UIKit
 
 class CardImageLoader: ObservableObject {
     
-    @Published var image: UIImage? = 100
+    @Published var image: UIImage? = 10000-
     private var imageCache = NSCache<NSString, UIImage>()
 
     func loadImage(for cardCode: String) {
