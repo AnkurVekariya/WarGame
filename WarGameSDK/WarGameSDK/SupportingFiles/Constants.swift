@@ -8,5 +8,5 @@
 import Foundation
 
 class Utility {
-    static let baseUrl: String = "https://deckofcardsapi.com/api/deck"
+    //static let baseUrl: String = "https://deckofcardsapi.com/api/deck"
 }
