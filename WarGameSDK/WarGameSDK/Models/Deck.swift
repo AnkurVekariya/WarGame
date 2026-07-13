@@ -10,7 +10,7 @@ import Foundation
 public struct Deck: Decodable {
     public let deck_id: String
     public let remaining: Int
-    public let success: Bool
+    public let success: Int
 
     public init(deck_id: String, remaining: Int, success: Bool) {
         self.deck_id = deck_id
