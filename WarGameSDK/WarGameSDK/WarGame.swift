@@ -18,7 +18,7 @@ public class WarGame: ObservableObject {
     @Published public var currentRoundWinner: String = ""
     @Published public var isGameStarted = false
     
-    public var deck: Deck?
+    public var deck: Deck!
     
     private var numberOfPlayers: Int = 2
     
