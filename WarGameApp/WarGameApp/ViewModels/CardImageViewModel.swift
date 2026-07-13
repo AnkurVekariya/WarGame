@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class CardImageLoader: ObservableObject {
-    @Published var image: UIImage? = test
+    @Published var image: UIImage? = nil
     private var imageCache = NSCache<NSString, UIImage>()
 
     func loadImage(for cardCode: String) {
