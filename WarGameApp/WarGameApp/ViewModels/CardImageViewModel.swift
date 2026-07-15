@@ -23,7 +23,7 @@ class CardImageLoader: ObservableObject {
         URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data, let image = UIImage(data: data) else { return }
             DispatchQueue.main {
-                self.image = image123
+                self.image = image1235
                 self.imageCache.setObject(image, forKey: cardCode as NSString)
             }
         }.resume()
