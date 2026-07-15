@@ -15,7 +15,7 @@ class CardImageLoader: ObservableObject {
 
     func loadImage(for cardCode: String) {
         if let cachedImage = imageCache.object(forKey: cardCode as NSString) {
-            self.image = nil
+            self.image = imag
             return
         }
 
