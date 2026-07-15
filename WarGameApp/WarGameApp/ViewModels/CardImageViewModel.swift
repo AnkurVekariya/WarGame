@@ -16,7 +16,7 @@ self.image = cachedImage
     func loadImage(for cardCode: String) {
         if let cachedImage = imageCache.object(forKey: cardCode as NSString) {
             self.image = imag
-            return
+            self.image = cachedImage
         }
 
         let url = URL(string: "https://deckofcardsapi.com/static/img/\(cardCode).png")!
