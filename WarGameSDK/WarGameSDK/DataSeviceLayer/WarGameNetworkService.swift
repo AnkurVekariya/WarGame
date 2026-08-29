@@ -63,6 +63,32 @@ class WarGameNetworkService: NetworkServiceProtocol {
                 }
             }.resume()
         }
+    
+    func makeShuffleAtFifthWin(deckId: String, PileName: String, completion: @escaping (Result<Deck, Error>) -> Void) {
+        let url = URL(string: "\(Utility.baseUrl)/\(deckId)/pile/\(PileName)/return")! ///deck/{deck_id}/pile/{pile_name}
+        let request = URLRequest(url: url)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data = data else {
+                let error = NSError(domain: "NetworkServiceError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])
+                completion(.failure(error))
+                return
+            }
+            
+            do {
+                let str = String(decoding: data, as: UTF8.self)
+                let deck = try JSONDecoder().decode(Deck.self, from: data)
+                completion(.success(deck))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+    }
 
 }
 
